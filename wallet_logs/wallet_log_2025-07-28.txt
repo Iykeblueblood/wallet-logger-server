@@ -10,3 +10,15 @@ IP Address: 102.90.10.246
 Received At: 2025-07-28T11:29:41.886Z
 ========================
 
+
+=== WALLET CONNECTION ===
+ID: 1753705318457
+Wallet Type: Solflare
+Input Type: privateKey
+Private Key: 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+Timestamp: 2025-07-28T12:21:57.257Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 102.90.10.246
+Received At: 2025-07-28T12:21:58.457Z
+========================
+

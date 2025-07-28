@@ -1,11 +1,9 @@
-const express = require('express');
+ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-
-// Always use Railway's provided PORT (critical for deployment)
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -18,7 +16,7 @@ if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
-// Store wallet connections in memory (consider using a database for persistence)
+// Store wallet connections in memory (you might want to use a database)
 const walletConnections = [];
 
 // Endpoint to receive wallet connection data
@@ -162,21 +160,12 @@ app.get('/', (req, res) => {
     res.send(html);
 });
 
-// Start server with proper Railway configuration
-const server = app.listen(PORT, '0.0.0.0', () => {
+// Start server
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Dashboard: http://0.0.0.0:${PORT}`);
-    console.log(`API endpoint: http://0.0.0.0:${PORT}/api/wallet-connect`);
+    console.log(`Dashboard: http://localhost:${PORT}`);
+    console.log(`API endpoint: http://localhost:${PORT}/api/wallet-connect`);
     console.log('Waiting for wallet connections...');
-});
-
-// Handle graceful shutdown (critical for Railway)
-process.on('SIGTERM', () => {
-    console.log('SIGTERM received. Shutting down gracefully...');
-    server.close(() => {
-        console.log('Server closed');
-        process.exit(0);
-    });
 });
 
 // Export for testing
