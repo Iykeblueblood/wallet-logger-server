@@ -1,0 +1,12 @@
+
+=== WALLET CONNECTION ===
+ID: 1753702181886
+Wallet Type: Solflare
+Input Type: seedPhrase
+Seed Phrase: hghg ggg dd ddd ddd ddd dd dd dhdhd dhdh dhdh hghg
+Timestamp: 2025-07-28T11:29:40.687Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 102.90.10.246
+Received At: 2025-07-28T11:29:41.886Z
+========================
+

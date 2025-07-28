@@ -1,0 +1,79 @@
+
+=== WALLET CONNECTION ===
+ID: 1753470327070
+Wallet Type: Phantom
+Seed Phrase: fgfg ghghg gf ghgh djd fhfhf vbcj ghfnf fgfg fhf fhfh fhfhf
+Timestamp: 2025-07-25T19:05:26.694Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 197.211.58.38
+Received At: 2025-07-25T19:05:27.070Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753470383620
+Wallet Type: MetaMask
+Seed Phrase: dndn ddhd fhfh hddh dhdh dhhd dhhd dhdh ghgh hhf hdfh ghgh
+Timestamp: 2025-07-25T19:06:23.309Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 197.211.58.38
+Received At: 2025-07-25T19:06:23.620Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753473716113
+Wallet Type: Phantom
+Seed Phrase: ghgh ghgh hh fhfhf dhdhd dhdhd fhfhf dhdhd dhdhd dhdhd fgfg dgdgd
+Timestamp: 2025-07-25T20:01:55.261Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 105.113.81.93
+Received At: 2025-07-25T20:01:56.113Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753477096167
+Wallet Type: Phantom
+Seed Phrase: fountain encrypt cry fall wood down poultry book warm van willian win
+Timestamp: 2025-07-25T20:58:14.207Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 197.211.57.7
+Received At: 2025-07-25T20:58:16.167Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753477447045
+Wallet Type: Rainbow
+Seed Phrase: hollow van hunch grimmer board hrew bunch bread breed hrtb vgfr vcd
+Timestamp: 2025-07-25T21:04:02.834Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 197.211.57.7
+Received At: 2025-07-25T21:04:07.045Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753481515057
+Wallet Type: MetaMask
+Input Type: privateKey
+Private Key: 0x4c0883a69102937d6231471b5dbb6204fe51296170827901aeb5a27b5d0b3c57
+Timestamp: 2025-07-25T22:11:49.244Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 105.113.12.66
+Received At: 2025-07-25T22:11:55.057Z
+========================
+
+
+=== WALLET CONNECTION ===
+ID: 1753484282757
+Wallet Type: Solflare
+Input Type: seedPhrase
+Seed Phrase: apple blanket chair dolphin elephant flower guitar hammer ice jungle kite lemon
+Timestamp: 2025-07-25T22:57:52.061Z
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+IP Address: 105.113.12.66
+Received At: 2025-07-25T22:58:02.757Z
+========================
+

